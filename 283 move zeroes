@@ -1,0 +1,38 @@
+28-08-2025
+leetcode 283 move zeroes:
+Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+Note that you must do this in-place without making a copy of the array.
+Example 1:
+Input: nums = [0,1,0,3,12]
+Output: [1,3,12,0,0]
+
+Example 2:
+Input: nums = [0]
+Output: [0]
+INTIUTION:
+1.it is certain that all the non zero numbers should be it the front of the array(vector).
+NOTE:it should not change the order of the array
+2.remaining place upto the size of the array must be zero.
+APPROACH:
+1.create a pointer i=0.
+2.using for loop,traverse through the list 
+3.if while traversing the array ,the element is zero,set nums[i]=that element .
+4.increment the i pointer.
+5.after traversing all the elements in array ,the i will be one value that is,if i=5 it means,upto 4 there are non zero elements .
+6.from i,to size(array)-1 set all to zero.
+CODE:
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int j=0;
+        for(int i=0;i<nums.size();i++){
+            if(nums[i]!=0){
+                nums[j]=nums[i];
+                j++;
+            }
+        }
+        for(int k=j;k<nums.size();k++){
+            nums[k]=0;
+        }
+    }
+};
