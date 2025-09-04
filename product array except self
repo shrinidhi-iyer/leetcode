@@ -1,0 +1,32 @@
+283.product of array except self:
+you are given a array nums and you need to return a array  ans that  contains elements in the indices that are the possible products of the number in the index of the array nums.
+I know that it is tough let me give the example:
+nums=[1,2,3,4],set ans=[1,1,1,1]
+for,1 product of all possible number except itself is,24 so,ans[0]=24
+similarly,for 2 is,12 so,ans[1]=12
+do the same for,all atlast,ans should be,[24,12,8,6]
+first let us look at,brute force attack,create 2 array prefix,suffix
+for each number store the product of all the numbers before itself in prefix and the product of all the possible number after it in suffix.
+Atlast,do product of,suffix,prefix and store in ans.
+this will create ,tle
+for this,we need make prefix,suffix as variables instead of array and update the values of suffix and prefix and ans side by side for the first element,the prefix will be 1 and for the last element,the suffix will be,1
+from this,we will understand that we need to traverse from first for prefix and from last for suffix and update the value
+at first,we will store,prefix only in ans and when we do suffix we will multiply ans with the present suffix this will give the answer
+this is c++ code
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int n=nums.size();
+        vector<int>ans(5,1);
+        int prefix=1;
+        for(int i=0 ; i<n;i++){
+           ans[i]=prefix;
+           prefix*=nums[i];
+        }
+        for(int i=n-1;i>-1;i--){
+          ans[i]*=suffix;
+          suffix*=nums[i];
+          }
+          return ans;
+          }
+      };
