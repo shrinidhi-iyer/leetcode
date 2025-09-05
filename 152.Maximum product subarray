@@ -1,0 +1,77 @@
+# Maximum Product Subarray – Explanation
+## Problem Statement
+You are given an integer array `nums`. Find the contiguous subarray (subarray = continuous elements, no skipping) that has the **largest product**, and return that product.
+### Example
+```text
+Input: nums = [2, 3, -2, 4]
+Output: 6
+Explanation: The subarray [2, 3] has product 6, which is the maximum.
+
+Why Kadane’s Algorithm (for sum) doesn’t work
+
+Kadane’s algorithm for maximum sum subarray works by keeping a running sum and resetting the sum to 0 whenever it goes negative (since a negative sum will only hurt future sums).
+But for the product case:
+
+If the current product is negative, we cannot reset, because multiplying with another negative later may flip it to positive and give the maximum product.
+
+Example: For [-2, 3, -4], if we reset at -2, we miss that -2 × -4 = 8. The actual maximum product is 24.
+
+Key Idea
+
+We must track two values at each index:
+
+maxProd → maximum product ending at this index.
+
+minProd → minimum product ending at this index.
+Why? Multiplying a negative number with minProd could become the new maximum. Multiplying a negative number with maxProd could become the new minimum.
+
+Handling Negative Numbers
+
+When the current number is negative, the roles of maxProd and minProd flip. To handle this, we swap maxProd and minProd before updating.
+Algorithm
+
+Initialize:
+
+maxProd = nums[0] (maximum product ending here)
+
+minProd = nums[0] (minimum product ending here)
+
+ans = nums[0] (global maximum so far)
+
+Traverse the array from index 1 to n-1:
+
+If nums[i] is negative → swap maxProd and minProd (because multiplying with a negative will flip signs).
+
+Update maxProd as the maximum of:
+
+nums[i] (starting fresh subarray),
+
+nums[i] × maxProd (extending previous maximum),
+
+nums[i] × minProd (extending previous minimum, which might flip to positive).
+
+Update minProd as the minimum of the same three options.
+
+Update ans = max(ans, maxProd).
+
+At the end, return ans.
+code(c++):
+class solution(
+     public:
+        int maxproduct(vector<int>&nums){
+               int n=nuns.size();
+               int maxprod=nums[0];
+               int minprod=nums[0];
+               int ans=nums[0];
+               for(int i=0;i<n;i++){
+                   if(nums[i]<0){
+                      swap(maxprod,minprod);
+                   }
+                   maxprod=max(nums[i],maxprod*nums[i]);
+                   minprod=min(nums[i],minprod*nums[i]);
+                   ans=max(ans,maxprod);
+              }
+              return ans;
+}};
+
+                       
